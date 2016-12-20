@@ -239,9 +239,14 @@ $('#createCard').on('click', function () {
   if (!validateCardName() || !validateCardDesc()) { return; }
   
   var selectedListId = $('#listsList option:selected').val();
+
+  var detailedCardDesc = $('#cardDesc').val() +
+                          "\n\n****************************************************************"+
+                          "\nChrome Version: " +/Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1]+
+                          "\n*****************************************************************";
   
   // Create card
-  tc.createCardAtBottomOfCurrentList(selectedListId, $('#cardName').val(), $('#cardDesc').val(), getSelectedLabels(), function (err, cardId) {
+  tc.createCardAtBottomOfCurrentList(selectedListId, $('#cardName').val(), detailedCardDesc , getSelectedLabels(), function (err, cardId) {
     async.waterfall([
       function (cb) {
         if ($('#on-top').prop('checked')) {
